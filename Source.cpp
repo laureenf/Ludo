@@ -114,10 +114,63 @@ void display_characters(const char* str, int x, int y) {
         glutBitmapCharacter(GLUT_BITMAP_8_BY_13, str[i]);
 }
 
+void draw_player(int r, int x, int y, float colour[]) {
+    glColor3fv(colour);
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(x, y);
+    for (float i = 0.0f; i <= 360; ++i) {
+        glVertex2f(r * cos(3.14159 * i / 180.0) + x, r * sin(3.14159 * i / 180.0) + y);
+    }
+    glEnd();
+    glColor3f(0, 0, 0);
+    glBegin(GL_POINTS);
+    for (float i = 0.0f; i <= 360; ++i) {
+        glVertex2f(r * cos(3.14159 * i / 180.0) + x, r * sin(3.14159 * i / 180.0) + y);
+    }
+    glEnd();
+}
+
+class Player {
+
+public:
+
+    int colour, position, home_position, home_path_position;
+    int x, y, home_x, home_y, init_x, init_y;
+
+    Player(int ch, int x1, int y1, int home_pos) {
+        colour = ch;
+        x = init_x = x1;
+        y = init_y = y1;
+        position = -1;
+        home_path_position = home_pos;
+        home_position = (home_path_position + 1) % 52;
+
+        if (colour == 0) {  //blue
+            home_x = x + 120; home_y = y;
+        }
+        else if (colour == 1) {
+            home_x = x; home_y = y + 120;
+        }
+        else if (colour == 2) { //green
+            home_x = x - 120; home_y = y;
+        }
+        else if (colour == 3) {
+            home_x = x; home_y = y - 120;
+        }
+    }
+};
+
+
+Player players[] = { Player(0, 270, 90, 51), Player(1, 810, 270, 38), Player(2, 630, 810, 25), Player(3, 90, 630, 12) };
+
 void display() {
     glClear(GL_COLOR_BUFFER_BIT);
 
     draw_board();
+
+    for (int i = 0; i < 4; ++i) {
+            draw_player(20, players[i].x, players[i].y, home_colours[i]);
+    }
 
     glColor3f(0, 0, 0);
     glRectf(360, 360, 540, 540);
