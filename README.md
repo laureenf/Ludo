@@ -16,3 +16,9 @@ An interactive, offline version of the popular Ludo board game using C++ & OpenG
 Project was created using: 
 * C++
 * OpenGL
+
+## Screenshots
+**4 player**
+<img src="https://user-images.githubusercontent.com/60699752/161394404-f7882df8-5408-43c9-8098-71912494d822.png">
+**2 player**
+<img src="https://user-images.githubusercontent.com/60699752/161394448-2ee30e6e-fe72-4664-8b60-84fffa5ce39f.png">
